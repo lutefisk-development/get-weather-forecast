@@ -112,7 +112,8 @@ if (! function_exists('gw_add_api_key_cb')) {
             type="text"
             name="gw_add_api_key"
             id="gw_add_api_key"
-            value="<?php echo get_option('gw_add_api_key', 'add API key here'); ?>"
+            placeholder="Add API key here"
+            value="<?php echo get_option('gw_add_api_key', false); ?>"
         >
         <?php
     }
