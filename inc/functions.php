@@ -31,6 +31,16 @@ if (! function_exists('gw_enqueue_files')) {
  */
 if (! function_exists('gw_get_weather')) {
     function gw_get_weather() {
+        $api_key = get_option('gw_add_api_key', false);
         $base_url = 'http://api.weatherapi.com/v1';
+
+        // Error handling for API key
+        if(!$api_key || '' === $api_key) {
+            return [
+                'success'   => false,
+                'error'     => 'Not a valid API key',
+            ];
+        }
+
     }
 }
