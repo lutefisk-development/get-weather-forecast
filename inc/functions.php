@@ -24,3 +24,13 @@ if (! function_exists('gw_enqueue_files')) {
 	    wp_enqueue_script('get_weather_js', plugin_dir_url(__FILE__) . 'assets/main.js', ['jquery'], false, true);
     }
 }
+
+/**
+ * Function for making http - GET requests to weatherapi.com
+ *
+ */
+if (! function_exists('gw_get_weather')) {
+    function gw_get_weather() {
+        $base_url = 'http://api.weatherapi.com/v1';
+    }
+}
