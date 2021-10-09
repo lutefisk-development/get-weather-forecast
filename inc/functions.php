@@ -9,7 +9,7 @@ require('class.GetWeather.php');
 add_action('widgets_init', 'gw_widget');
 if (! function_exists('gw_widget')) {
     function gw_widget() {
-        register_widget('Get_Weather');
+        register_widget('GetWeather');
     }
 }
 
