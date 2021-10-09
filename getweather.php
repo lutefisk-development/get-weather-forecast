@@ -11,3 +11,6 @@
  * Text Domain: 	getweather
  * Domain Path: 	/languages
  */
+
+require('inc/functions.php');
+require('inc/settings.php');
