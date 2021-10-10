@@ -44,7 +44,16 @@ if (! function_exists('gw_settings_init')) {
             'gw_general_option',                // section to add settings field
         );
 
+        add_settings_field(
+            'gw_default_widget_title',  // id
+            'Default Widget Title',     // label
+            'gw_add_default_title_cb',  // callback
+            'gwsettings',               // page to add settings field
+            'gw_general_option',        // section to add settings field
+        );
+
         register_setting('gw_general_option', 'gw_add_api_key');
+        register_setting('gw_general_option', 'gw_default_widget_title');
     }
 }
 
@@ -114,6 +123,19 @@ if (! function_exists('gw_add_api_key_cb')) {
             id="gw_add_api_key"
             placeholder="Add API key here"
             value="<?php echo get_option('gw_add_api_key', false); ?>"
+        >
+        <?php
+    }
+}
+
+if (! function_exists('gw_add_default_title_cb')) {
+    function gw_add_default_title_cb() {
+        ?>
+        <input
+            type="text"
+            name="gw_default_widget_title"
+            id="gw_default_widget_title"
+            value="<?php echo get_option('gw_default_widget_title', 'Get Weather Forecast'); ?>"
         >
         <?php
     }
