@@ -20,8 +20,29 @@ if (! function_exists('gw_widget')) {
 add_action('wp_enqueue_scripts', 'gw_enqueue_files');
 if (! function_exists('gw_enqueue_files')) {
     function gw_enqueue_files() {
-        wp_enqueue_style('get_weather_css', plugin_dir_url(__FILE__) . 'assets/style.css');
-	    wp_enqueue_script('get_weather_js', plugin_dir_url(__FILE__) . 'assets/main.js', ['jquery'], false, true);
+        wp_enqueue_style('get_weather_css', plugin_dir_url(__FILE__) . '../assets/style.css');
+	    wp_enqueue_script('get_weather_js', plugin_dir_url(__FILE__) . '../assets/main.js', ['jquery'], false, true);
+        wp_localize_script('get_weather_js', 'ajax_obj', [
+            'ajax_url' => admin_url('admin-ajax.php'),
+        ]);
+    }
+}
+
+/**
+ * AJAX response
+ *
+ */
+add_action('wp_ajax_get_gw_data', 'get_gw_data');
+add_action('wp_ajax_nopriv_get_gw_data', 'get_gw_data');
+if (! function_exists('get_gw_data')) {
+    function get_gw_data() {
+        $response = gw_get_weather();
+
+        if ($response) {
+            wp_send_json_success($response);
+        } else {
+            wp_send_json_error('Something went wrong!');
+        }
     }
 }
 
