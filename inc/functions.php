@@ -63,5 +63,35 @@ if (! function_exists('gw_get_weather')) {
             ];
         }
 
+        // Make API request
+        $response = wp_remote_get("{$base_url}/current.json?q=" . $_POST['city'] . "&key={$api_key}");
+
+        // Error handling - check for valid response
+        if(is_wp_error($response) || wp_remote_retrieve_response_code($response) !== 200) {
+            return [
+                'success'	=> false,
+                'error' 	=> wp_remote_retrieve_response_code($response),
+            ];
+        }
+
+        // Parse response
+        $data = json_decode(wp_remote_retrieve_body($response));
+
+        // Cherry pick data
+        $weather_data = [];
+        $weather_data['temp'] = $data->current->temp_c;
+        $weather_data['humidity'] = $data->current->humidity;
+        $weather_data['condition'] = $data->current->condition->text;
+        $weather_data['condition_icon'] = $data->current->condition->icon;
+        $weather_data['country'] = $data->location->country;
+        $weather_data['region'] = $data->location->region;
+        $weather_data['lat'] = $data->location->lat;
+        $weather_data['lng'] = $data->location->lon;
+
+        // Return valid data
+        return [
+            'success'   => true,
+            'data'      => $weather_data,
+        ];
     }
 }
